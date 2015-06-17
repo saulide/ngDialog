@@ -50,7 +50,8 @@
             ariaLabelledById: null,
             ariaLabelledBySelector: null,
             ariaDescribedById: null,
-            ariaDescribedBySelector: null
+            ariaDescribedBySelector: null,
+            additionalElements: ''
         };
 
         this.setForceBodyReload = function (_useIt) {
@@ -408,6 +409,7 @@
                      * - closeByEscape {Boolean} - default true
                      * - closeByDocument {Boolean} - default true
                      * - preCloseCallback {String|Function} - user supplied function name/function called before closing dialog (if set)
+                     * - additionalElements - user supplied additional directives that are integrated to the dialog panel
                      *
                      * @return {Object} dialog
                      */
@@ -419,6 +421,8 @@
 
                         opts = opts || {};
                         angular.extend(options, opts);
+
+                        var additionalElements = options.additionalElements || "";
 
                         var defer;
                         defers[dialogID] = defer = $q.defer();
@@ -445,7 +449,7 @@
                                 template += '<div class="ngdialog-close"></div>';
                             }
 
-                            $dialog = $el('<div id="ngdialog' + localID + '" class="ngdialog"></div>');
+                            $dialog = $el('<div id="ngdialog' + localID + '" class="ngdialog" ' + additionalElements + '></div>');
                             $dialog.html((options.overlay ?
                                 '<div class="ngdialog-overlay"></div><div class="ngdialog-content" role="document">' + template + '</div>' :
                                 '<div class="ngdialog-content" role="document">' + template + '</div>'));
